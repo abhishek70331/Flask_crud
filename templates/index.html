@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+     <div class="container mt-3">
+        <div class="card">
+         <div class="card-body text-center">
+            <h2>CRUD Web Application</h2>
+         </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        
+        <div class="row">
+            <div class="col md-12">
+                <div class="card">
+                <h3 class="p-2">Student List <button type="button" class="btn btn-success float-end" data-bs-toggle = "modal" data-bs-target="#myModal">Add Student</button></h3>
+
+                <table class="table table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for row in crud %}
+                    <tr>
+                        <td>{{row.0}}</td>
+                        <td>{{row.1}}</td>
+                        <td>{{row.2}}</td>
+                        <td>{{row.3}}</td>
+                        <td>
+                            <a href="/update/{{row[0]}}" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Modaledit{{row[0]}}">Edit</a>
+                            <a href="/delete/{{row[0]}}" class="btn btn-danger" onclick="return confirm('Are you sure to delete?')">Delete</a>
+                        </td>
+                    </tr>
+
+                    <div class="modal" id="Modaledit{{row[0]}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2>Update Student</h2>
+                                    <button class="close" type="button" data-bs-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/update" method="POST">
+                
+                                        <label>ID</label>
+                                        <div class="form-group">
+                                            <input type = "number" class="form-control" name="id" value="{{row[0]}}">
+                                        </div>
+                
+                                        <label>Name</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Name" name = "name" value="{{row[1]}}">
+                                        </div>
+                
+                                        <label>Email</label>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" placeholder="Email" name = "email" value="{{row[2]}}">
+                                        </div>
+                
+                                        <label>Phone</label>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" placeholder="Number" name ="phone" value="{{row[3]}}">
+                                        </div>
+                
+                                        <button type = "submit" class="btn btn-success mt-3 p-2">
+                                        Submit
+                                        </button>
+                
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+
+                    {% endfor %}
+                </table>
+
+
+            </div>
+        </div>
+    </div> 
+
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add Student</h2>
+                    <button class="close" type="button" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="/index" method="POST">
+
+                        <label>ID</label>
+                        <div class="form-group">
+                            <input type = "number" class="form-control" placeholder="ID" name="id">
+                        </div>
+
+                        <label>Name</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Enter Name" name = "name">
+                        </div>
+
+                        <label>Email</label>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email" name = "email">
+                        </div>
+
+                        <label>Phone</label>
+                        <div class="form-group">
+                            <input type="number" class="form-control" placeholder="Number" name ="phone">
+                        </div>
+
+                        <button type = "submit" class="btn btn-success mt-3 p-2">
+                            Submit
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    </body>
+</html>
